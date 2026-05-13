@@ -22,7 +22,7 @@ terms) belong in the project's `AdditionalSpecs.md`.
 
 Every `docs/` project must contain at least the following two documents:
 
-### Getting Started
+### Getting Started (getting_started.tex)
 
 A concise, step-by-step guide that takes a brand-new user from installation to
 first successful use of the main workflow. It must:
@@ -33,7 +33,7 @@ first successful use of the main workflow. It must:
 - Walk through the primary workflow end-to-end with concrete examples.
 - Be short enough to read in one sitting (target: ≤ 15 pages).
 
-### User Guide
+### User Guide (MASTER.tex)
 
 A complete, authoritative reference for every user-facing feature, command,
 configuration option, and error condition. It must:
@@ -73,3 +73,7 @@ configuration option, and error condition. It must:
   scheduled for removal in the next release cycle.
 - Documentation changes do not require code review approval, but must not
   contradict the source code.
+
+## Compiler and build requirements
+- Use `pdflatex` as baseline compiler.
+- Because `minted` is used in shared packages, compilation should support shell escape (`minted` calls the external Pygments process for syntax highlighting).
