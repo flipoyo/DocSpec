@@ -1,61 +1,52 @@
-```bash
 #!/usr/bin/env bash
 # ============================================================================
-# launchSlidevDev.sh
+# launch_slidev_project.sh
 # ============================================================================
 #
-# Launch and initialize a Slidev project automatically.
-#
-# Features
-# ----------------------------------------------------------------------------
-#
-# - Create project if missing
-# - Install/update Node dependencies
-# - Auto-detect npm/pnpm/yarn
-# - Open project in IDE/editor
-# - Launch Slidev dev server
-# - Optional browser opening
-# - Optional xterm spawning
+# Launch an existing Slidev project: install/update dependencies, open the
+# editor, and start the dev server.
 #
 #
 # Syntax
 # ----------------------------------------------------------------------------
 #
-#   ./launchSlidevDev.sh PROJECT_NAME [IDE]
+#   ./launch_slidev_project.sh PROJECT_PATH [IDE]
 #
 #
 # Examples
 # ----------------------------------------------------------------------------
 #
-#   ./launchSlidevDev.sh HTASSlides
+#   ./launch_slidev_project.sh ./MyPresentation
 #
-#   ./launchSlidevDev.sh HTASSlides codium
+#   ./launch_slidev_project.sh ./MyPresentation codium
 #
-#   ./launchSlidevDev.sh HTASSlides code
+#   ./launch_slidev_project.sh ./MyPresentation code
 #
-#   ./launchSlidevDev.sh HTASSlides xterm
+#   ./launch_slidev_project.sh ./MyPresentation none
 #
 #
 # Supported IDE values
 # ----------------------------------------------------------------------------
 #
-#   codium
-#   code
-#   xterm
-#   none
+#   codium   (default) — VSCodium
+#   code     — Visual Studio Code
+#   none     — skip editor launch
 #
 #
 # Requirements
 # ----------------------------------------------------------------------------
 #
+#   Ubuntu 22+
 #   node >= 20
 #   npm
+#   An existing Slidev project (created with create_slidev_project.sh)
 #
 #
 # Recommended
 # ----------------------------------------------------------------------------
 #
-#   nvm
+#   nvm (for Node version management)
+#   codium or code (VS Code / VS Codium for editing)
 #
 # ============================================================================
 
@@ -65,8 +56,15 @@ set -euo pipefail
 # CONFIG
 # ============================================================================
 
-PROJECT_NAME="${1:-HTASSlides}"
+PROJECT_PATH="${1:-}"
 IDE="${2:-codium}"
+
+if [ -z "$PROJECT_PATH" ]; then
+    echo "Usage: $0 PROJECT_PATH [IDE]"
+    echo
+    echo "Example: $0 ./MyPresentation codium"
+    exit 1
+fi
 
 PORT=3030
 
@@ -75,9 +73,9 @@ PORT=3030
 # ============================================================================
 
 GREEN="\033[1;32m"
-BLUE="\033[1;34m"
 YELLOW="\033[1;33m"
 RED="\033[1;31m"
+BLUE="\033[1;34m"
 RESET="\033[0m"
 
 # ============================================================================
@@ -117,7 +115,7 @@ NODE_MAJOR="$(node -v | sed 's/v//' | cut -d'.' -f1)"
 if [ "$NODE_MAJOR" -lt 20 ]; then
     err "Node version too old: $(node -v)"
     echo
-    echo "Slidev/Vite now require Node >= 20."
+    echo "Slidev/Vite require Node >= 20."
     echo
     echo "Recommended:"
     echo
@@ -130,114 +128,73 @@ fi
 msg "Using Node $(node -v)"
 
 # ============================================================================
-# PROJECT CREATION
+# CHECK PROJECT EXISTS
 # ============================================================================
 
-if [ ! -d "$PROJECT_NAME" ]; then
-
-    msg "Creating Slidev project: $PROJECT_NAME"
-
-    npm create slidev@latest "$PROJECT_NAME"
-
+if [ ! -d "$PROJECT_PATH" ]; then
+    err "Project directory not found: $PROJECT_PATH"
+    echo
+    echo "Use create_slidev_project.sh to create a new project first."
+    exit 1
 fi
 
-cd "$PROJECT_NAME"
+cd "$PROJECT_PATH"
+
+if [ ! -f "package.json" ]; then
+    err "No package.json found in $PROJECT_PATH — not a valid Slidev project."
+    exit 1
+fi
 
 # ============================================================================
-# INSTALL
+# INSTALL / UPDATE DEPENDENCIES
 # ============================================================================
 
 if [ ! -d "node_modules" ]; then
-
-    msg "Installing dependencies"
-
+    msg "Installing dependencies..."
     npm install
-
 else
-
-    msg "Dependencies already installed"
-
-fi
-
-# ============================================================================
-# DEFAULT SLIDES
-# ============================================================================
-
-if [ ! -f "slides.md" ]; then
-
-cat > slides.md <<'EOF'
----
-theme: default
-title: HydrologicalTwin
-fonts:
-  sans: Inter
----
-
-# HydrologicalTwin
-
-A scientific platform for sustainable water resource management.
-EOF
-
+    msg "Dependencies already installed."
 fi
 
 # ============================================================================
 # OPEN IDE
 # ============================================================================
 
-open_ide() {
+case "$IDE" in
 
-    case "$IDE" in
+    codium)
+        if command -v codium >/dev/null 2>&1; then
+            msg "Opening project in VSCodium"
+            codium . >/dev/null 2>&1 &
+        else
+            warn "codium not found — skipping editor launch"
+        fi
+        ;;
 
-        codium)
+    code)
+        if command -v code >/dev/null 2>&1; then
+            msg "Opening project in VS Code"
+            code . >/dev/null 2>&1 &
+        else
+            warn "code not found — skipping editor launch"
+        fi
+        ;;
 
-            if command -v codium >/dev/null 2>&1; then
-                msg "Opening project in Codium"
-                codium . >/dev/null 2>&1 &
-            else
-                warn "Codium not found"
-            fi
-            ;;
+    none)
+        msg "Editor launch skipped."
+        ;;
 
-        code)
+    *)
+        warn "Unknown IDE: $IDE — skipping editor launch"
+        ;;
 
-            if command -v code >/dev/null 2>&1; then
-                msg "Opening project in VSCode"
-                code . >/dev/null 2>&1 &
-            else
-                warn "VSCode not found"
-            fi
-            ;;
-
-        xterm)
-
-            if command -v xterm >/dev/null 2>&1; then
-                msg "Opening xterm"
-                xterm -e "bash -c 'cd $(pwd); bash'" &
-            else
-                warn "xterm not found"
-            fi
-            ;;
-
-        none)
-
-            msg "IDE launch skipped"
-            ;;
-
-        *)
-
-            warn "Unknown IDE: $IDE"
-            ;;
-
-    esac
-}
-
-open_ide
+esac
 
 # ============================================================================
-# LAUNCH SLIDEV
+# LAUNCH SLIDEV DEV SERVER
 # ============================================================================
 
-msg "Starting Slidev server"
+msg "Starting Slidev dev server on port ${PORT}..."
 
 npm run dev -- --open &
 
@@ -251,7 +208,7 @@ sleep 4
 
 echo
 echo -e "${BLUE}========================================${RESET}"
-echo -e "${BLUE} Slidev Project Ready${RESET}"
+echo -e "${BLUE} Slidev Project Running${RESET}"
 echo -e "${BLUE}========================================${RESET}"
 echo
 echo "Project : $(pwd)"
@@ -264,4 +221,3 @@ echo "  kill ${SLIDEV_PID}"
 echo
 
 wait ${SLIDEV_PID}
-```
