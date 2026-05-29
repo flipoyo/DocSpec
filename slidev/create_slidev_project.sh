@@ -20,8 +20,6 @@
 #
 #   ./create_slidev_project.sh MyPresentation
 #
-#   ./create_slidev_project.sh HTASSlides
-#
 #
 # Requirements
 # ----------------------------------------------------------------------------

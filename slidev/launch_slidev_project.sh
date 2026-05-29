@@ -16,13 +16,13 @@
 # Examples
 # ----------------------------------------------------------------------------
 #
-#   ./launch_slidev_project.sh ./HTASSlides
+#   ./launch_slidev_project.sh ./MyPresentation
 #
-#   ./launch_slidev_project.sh ./HTASSlides codium
+#   ./launch_slidev_project.sh ./MyPresentation codium
 #
-#   ./launch_slidev_project.sh ./HTASSlides code
+#   ./launch_slidev_project.sh ./MyPresentation code
 #
-#   ./launch_slidev_project.sh ./HTASSlides none
+#   ./launch_slidev_project.sh ./MyPresentation none
 #
 #
 # Supported IDE values
