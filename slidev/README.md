@@ -23,39 +23,24 @@ The helper scripts are Bash scripts and are designed for Ubuntu 22+ with Node.js
    nvm use 22
    ```
 
-2. From the repository root, create a presentation:
+2. Create a Project
 
-   ```bash
-   ./slidev/create_slidev_project.sh MyPresentation
-   ```
 
-3. Copy the recommended Git ignore rules into the new project:
-
-   ```bash
-   cp ./slidev/.gitignore ./MyPresentation/.gitignore
-   ```
-
-4. Start the project:
-
-   ```bash
-   ./slidev/launch_slidev_project.sh ./MyPresentation codium
-   ```
-
-   Replace `codium` with `code` or `none` if needed.
-
-5. Edit `MyPresentation/slides.md`.
-
-## Windows
-
-The helper scripts in this directory require Bash. On Windows, the simplest option is to use WSL2 with Ubuntu 22+ and follow the Ubuntu steps above.
-
-If you prefer to work directly from PowerShell, create and run Slidev manually:
-
-```powershell
+```bash
 npm create slidev@latest MyPresentation
 cd .\MyPresentation
 npm install
+```
+
+3. Launch a Project
+
+```
 npm run dev
 ```
+
+5. Edit `MyPresentation/slides.md`.
+
+Use whatever software such as code or codium. Launching the project makes it accessible from a simple webbrowser for a WYSWYG experience.
+
 
 In that case, copy `slidev/.gitignore` into the project root before syncing the presentation to Git.
