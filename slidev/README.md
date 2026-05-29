@@ -17,7 +17,7 @@ The helper scripts are Bash scripts and are designed for Ubuntu 22+ with Node.js
    ```bash
    sudo apt update
    sudo apt install -y curl
-   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/master/install.sh | bash
+   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
    source ~/.bashrc
    nvm install 22
    nvm use 22
@@ -47,7 +47,7 @@ The helper scripts are Bash scripts and are designed for Ubuntu 22+ with Node.js
 
 ## Windows
 
-The helper scripts in this directory require Bash. On Windows, the simplest option is to use WSL2 with Ubuntu 22.04+ and follow the Ubuntu steps above.
+The helper scripts in this directory require Bash. On Windows, the simplest option is to use WSL2 with Ubuntu 22+ and follow the Ubuntu steps above.
 
 If you prefer to work directly from PowerShell, create and run Slidev manually:
 
