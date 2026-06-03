@@ -26,7 +26,7 @@ The helper scripts are Bash scripts and are designed for Ubuntu 22+ with Node.js
 
 ```bash
 npm create slidev@latest MyPresentation
-cd .\MyPresentation
+cd ./MyPresentation
 npm install
 ```
 
