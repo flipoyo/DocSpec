@@ -3,7 +3,7 @@
 
     <div class="flex justify-end p-4">
       <img
-        src="/logos/piren-seine-transparent.png"
+        src="/logo/piren-seine-transparent.png"
         style="height:50px"
       />
     </div>

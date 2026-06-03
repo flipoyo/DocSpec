@@ -1,9 +1,13 @@
 <template>
-  <div class="h-full flex flex-col">
+  <div
+    class="h-full flex flex-col"
+    style="background:white"
+    
+  >
 
     <div class="flex justify-end p-6">
       <img
-        src="/logos/piren-seine-transparent.png"
+        src="/logo/piren-seine-transparent.png"
         style="height:80px"
       />
     </div>

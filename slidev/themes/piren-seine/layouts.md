@@ -5,7 +5,4 @@
 - content
 - figure-right
 - fullscreen-figure
-- timeline
-- workflow
-- scenario
 - closing
