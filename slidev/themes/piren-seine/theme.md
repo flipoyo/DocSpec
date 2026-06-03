@@ -1,8 +1,8 @@
 ---
 theme: default
-title: PIREN-Seine Theme
+title: PIREN-Seine
 defaults:
   layout: content
 ---
 
-<style src="./setup/styles.css"></style>
+<!-- <style src="./setup/styles.css"></style> -->
