@@ -1,0 +1,27 @@
+:root {
+
+  --piren-blue-dark: #007179;
+  --piren-blue: #008F9D;
+  --piren-blue-soft: #6AC2BF;
+
+  --piren-green: #00A174;
+  --piren-green-soft: #6FBC80;
+  --piren-green-pale: #D1E2A8;
+
+  --piren-pink: #C75A88;
+
+  --piren-text: #1f2937;
+}
+
+.slidev-layout {
+  background: white;
+  color: var(--piren-text);
+}
+
+h1 {
+  color: var(--piren-blue-dark);
+}
+
+h2 {
+  color: var(--piren-blue);
+}
