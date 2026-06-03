@@ -1,11 +1,9 @@
 # Slidev helpers
 
-This directory contains helper files for creating and running [Slidev](https://sli.dev/) presentations for the communication artifacts referenced by this repository.
+This directory contains templates for the communication artifacts referenced by this repository.
 
 ## Files
 
-- `create_slidev_project.sh` — creates a new Slidev project and installs its dependencies.
-- `launch_slidev_project.sh` — opens an existing Slidev project, installs dependencies if needed, optionally opens an editor, and starts the Slidev dev server.
 - `.gitignore` — recommended ignore rules to copy into the root of a Slidev project before syncing it to Git.
 
 ## Getting started on Ubuntu 22+
