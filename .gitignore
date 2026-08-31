@@ -3,5 +3,5 @@
 # synced back to a shared spec repo. This is a second line of defense in
 # case a contributor ever runs project tooling from inside a ./DocSpec/
 # submodule checkout by mistake.
-AgentSpecs/
+AgentSpec/
 *_DevPlanTicket.md
